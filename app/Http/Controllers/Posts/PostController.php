@@ -15,6 +15,6 @@ class PostController extends Controller
         return fractal()
             ->collection($posts)
             ->transformWith(new PostTransformer())
-            ->toArray();
+            ->respond(200, [], JSON_UNESCAPED_SLASHES);
     }
 }
