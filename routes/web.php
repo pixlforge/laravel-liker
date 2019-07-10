@@ -18,3 +18,16 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+/**
+ * API
+ */
+Route::prefix('/api')->group(function () {
+
+    /**
+     * Posts
+     */
+    Route::namespace('Posts')->group(function () {
+        Route::resource('/posts', 'PostController');
+    });
+});
