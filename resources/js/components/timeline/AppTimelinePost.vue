@@ -1,15 +1,15 @@
 <template>
   <div class="timeline__post media">
     <img
-      src=""
+      :src="post.author.data.avatar"
       alt=""
       class="timeline__avatar rounded mr-3">
     <div class="media-body">
       <div class="font-weight-bold">
-        Célien
+        {{ post.author.data.name }}
       </div>
       <p>
-        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Mollitia tempora, omnis corrupti deserunt eius ut. Hic quibusdam eveniet corporis voluptate officia pariatur ab quasi, expedita esse commodi delectus atque aperiam?
+        {{ post.body }}
       </p>
 
       <app-timeline-post-likes/>
@@ -23,6 +23,12 @@ import AppTimelinePostLikes from "../timeline/AppTimelinePostLikes";
 export default {
   components: {
     AppTimelinePostLikes
+  },
+  props: {
+    post: {
+      type: Object,
+      required: true
+    }
   }
 }
 </script>
