@@ -14,26 +14,25 @@
 <script>
 import AppTimelineCreate from '../timeline/AppTimelineCreate';
 import AppTimelinePost from '../timeline/AppTimelinePost';
-import axios from 'axios';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   components: {
     AppTimelineCreate,
     AppTimelinePost
   },
-  data() {
-    return {
-      posts: []
-    }
+  computed: {
+    ...mapGetters({
+      posts: "posts"
+    })
   },
   mounted() {
     this.getPosts();
   },
   methods: {
-    async getPosts() {
-      const posts = await axios.get('/api/posts');
-      this.posts = posts.data.data;
-    }
+    ...mapActions({
+      getPosts: "getPosts"
+    })
   }
 }
 </script>
