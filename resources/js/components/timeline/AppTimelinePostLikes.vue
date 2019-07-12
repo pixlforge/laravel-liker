@@ -1,7 +1,7 @@
 <template>
   <div>
     <span class="text-secondary">
-      3 likes from 2 people (including you)
+      {{ likes }} likes from X people (including you)
     </span>
 
     <ul class="list-inline mb-0">
@@ -16,7 +16,12 @@
 
 <script>
 export default {
-  
+  props: {
+    likes: {
+      type: Number,
+      required: true
+    }
+  }
 }
 </script>
 

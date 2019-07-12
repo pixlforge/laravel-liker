@@ -12,7 +12,7 @@
         {{ post.body }}
       </p>
 
-      <app-timeline-post-likes/>
+      <app-timeline-post-likes :likes="post.likes"/>
     </div>
   </div>
 </template>

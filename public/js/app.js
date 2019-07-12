@@ -2058,7 +2058,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    likes: {
+      type: Number,
+      required: true
+    }
+  }
+});
 
 /***/ }),
 
@@ -38914,7 +38921,7 @@ var render = function() {
         _vm._v(" "),
         _c("p", [_vm._v("\n      " + _vm._s(_vm.post.body) + "\n    ")]),
         _vm._v(" "),
-        _c("app-timeline-post-likes")
+        _c("app-timeline-post-likes", { attrs: { likes: _vm.post.likes } })
       ],
       1
     )
@@ -38942,24 +38949,26 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("span", { staticClass: "text-secondary" }, [
+      _vm._v(
+        "\n    " +
+          _vm._s(_vm.likes) +
+          " likes from X people (including you)\n  "
+      )
+    ]),
+    _vm._v(" "),
+    _vm._m(0)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("span", { staticClass: "text-secondary" }, [
-        _vm._v("\n    3 likes from 2 people (including you)\n  ")
-      ]),
-      _vm._v(" "),
-      _c("ul", { staticClass: "list-inline mb-0" }, [
-        _c("li", { staticClass: "list-inline-item" }, [
-          _c("a", { attrs: { href: "" } }, [
-            _vm._v("\n        Like it\n      ")
-          ])
-        ])
+    return _c("ul", { staticClass: "list-inline mb-0" }, [
+      _c("li", { staticClass: "list-inline-item" }, [
+        _c("a", { attrs: { href: "" } }, [_vm._v("\n        Like it\n      ")])
       ])
     ])
   }
