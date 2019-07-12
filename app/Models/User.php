@@ -37,8 +37,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Returns the user's gravatar.
+     *
+     * @return void
+     */
     public function avatar()
     {
         return 'https://www.gravatar.com/avatar/' . md5($this->email);
+    }
+
+    /**
+     * Posts relationship.
+     *
+     * @return void
+     */
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
     }
 }

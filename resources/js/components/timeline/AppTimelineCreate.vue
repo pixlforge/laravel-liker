@@ -1,6 +1,5 @@
 <template>
-  <form
-    action="">
+  <form @submit.prevent="submit">
     <div class="form-group">
       <label
         for="body"
@@ -9,6 +8,7 @@
       </label>
       <textarea
         id="body"
+        v-model="form.body"
         name="body"
         class="form-control"
         placeholder="Share something"
@@ -26,7 +26,24 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex';
+
 export default {
+  data() {
+    return {
+      form: {
+        body: ""
+      }
+    };
+  },
+  methods: {
+    ...mapActions({
+      createPost: "createPost"
+    }),
+    async submit() {
+      await this.createPost(this.form);
+      this.form.body = "";
+    }
+  }
 }
 </script>
-
