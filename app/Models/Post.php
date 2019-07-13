@@ -28,10 +28,22 @@ class Post extends Model
     /**
      * Likes relationship.
      *
-     * @return void
+     * @return \Illuminate\Database\Eloquent\Relations\MorphMany
      */
     public function likes()
     {
         return $this->morphMany(Like::class, 'likeable');
+    }
+
+    /**
+     * Likers has many Like through User relationship.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasManyThrough
+     */
+    public function likers()
+    {
+        return $this->hasManyThrough(User::class, Like::class, 'likeable_id', 'id', 'id', 'user_id')
+            ->where('likeable_type', Post::class)
+            ->groupBy('likes.user_id', 'users.id', 'likes.likeable_id');
     }
 }
