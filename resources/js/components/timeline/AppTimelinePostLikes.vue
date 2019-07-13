@@ -1,7 +1,10 @@
 <template>
   <div>
-    <span class="text-secondary">
-      {{ likes }} likes from X people (including you)
+    <span
+      v-if="post.likes"
+      class="text-secondary">
+      {{ likes }} from {{ numberOfUsers }}
+      (including you)
     </span>
 
     <ul class="list-inline mb-0">
@@ -15,11 +18,21 @@
 </template>
 
 <script>
+import pluralize from "pluralize";
+
 export default {
   props: {
-    likes: {
-      type: Number,
+    post: {
+      type: Object,
       required: true
+    }
+  },
+  computed: {
+    likes() {
+      return pluralize('like', this.post.likes, true);
+    },
+    numberOfUsers() {
+      return pluralize('person', this.post.likers.data.length, true);
     }
   }
 }
