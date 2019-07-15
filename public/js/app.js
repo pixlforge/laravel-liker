@@ -2044,6 +2044,15 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! pluralize */ "./node_modules/pluralize/pluralize.js");
 /* harmony import */ var pluralize__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(pluralize__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { keys.push.apply(keys, Object.getOwnPropertySymbols(object)); } if (enumerableOnly) keys = keys.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { if (i % 2) { var source = arguments[i] != null ? arguments[i] : {}; ownKeys(source, true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(arguments[i])); } else { ownKeys(source).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(arguments[i], key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
 //
 //
 //
@@ -2068,6 +2077,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     post: {
@@ -2088,7 +2098,14 @@ __webpack_require__.r(__webpack_exports__);
     ownsPost: function ownsPost() {
       return this.post.user.data.owner;
     }
-  }
+  },
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
+    likePost: "likePost"
+  }), {
+    like: function like() {
+      this.likePost(this.post.id);
+    }
+  })
 });
 
 /***/ }),
@@ -39506,20 +39523,27 @@ var render = function() {
       : _vm._e(),
     _vm._v(" "),
     !_vm.ownsPost
-      ? _c("ul", { staticClass: "list-inline mb-0" }, [_vm._m(0)])
+      ? _c("ul", { staticClass: "list-inline mb-0" }, [
+          _c("li", { staticClass: "list-inline-item" }, [
+            _c(
+              "a",
+              {
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.like($event)
+                  }
+                }
+              },
+              [_vm._v("\n        Like it\n      ")]
+            )
+          ])
+        ])
       : _vm._e()
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "list-inline-item" }, [
-      _c("a", { attrs: { href: "" } }, [_vm._v("\n        Like it\n      ")])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -53159,6 +53183,15 @@ vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     "PREPEND_POST": function PREPEND_POST(state, post) {
       state.posts.unshift(post);
+    },
+    "UPDATE_POST": function UPDATE_POST(state, post) {
+      state.posts = state.posts.map(function (p) {
+        if (p.id === post.id) {
+          return post;
+        }
+
+        return p;
+      });
     }
   },
 
@@ -53227,6 +53260,37 @@ vue__WEBPACK_IMPORTED_MODULE_2___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
       }
 
       return createPost;
+    }(),
+    likePost: function () {
+      var _likePost = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(_ref3, id) {
+        var commit, post;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                commit = _ref3.commit;
+                _context3.next = 3;
+                return axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("/api/posts/".concat(id, "/likes"));
+
+              case 3:
+                post = _context3.sent;
+                commit('UPDATE_POST', post.data.data);
+
+              case 5:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3);
+      }));
+
+      function likePost(_x4, _x5) {
+        return _likePost.apply(this, arguments);
+      }
+
+      return likePost;
     }()
   }
 }));

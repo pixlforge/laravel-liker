@@ -29,5 +29,6 @@ Route::prefix('/api')->group(function () {
      */
     Route::namespace('Posts')->group(function () {
         Route::resource('/posts', 'PostController');
+        Route::resource('/posts/{post}/likes', 'PostLikeController');
     });
 });

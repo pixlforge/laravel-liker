@@ -13,7 +13,9 @@
       v-if="!ownsPost"
       class="list-inline mb-0">
       <li class="list-inline-item">
-        <a href="">
+        <a
+          href="#"
+          @click.prevent="like">
           Like it
         </a>
       </li>
@@ -23,6 +25,7 @@
 
 <script>
 import pluralize from "pluralize";
+import { mapActions } from "vuex";
 
 export default {
   props: {
@@ -43,6 +46,14 @@ export default {
     },
     ownsPost() {
       return this.post.user.data.owner;
+    }
+  },
+  methods: {
+    ...mapActions({
+      likePost: "likePost"
+    }),
+    like() {
+      this.likePost(this.post.id);
     }
   }
 }

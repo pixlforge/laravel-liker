@@ -29,8 +29,19 @@ export default new Vuex.Store({
     "SET_POSTS"(state, posts) {
       state.posts = posts;
     },
+
     "PREPEND_POST"(state, post) {
       state.posts.unshift(post);
+    },
+
+    "UPDATE_POST"(state, post) {
+      state.posts = state.posts.map(p => {
+        if (p.id === post.id) {
+          return post;
+        }
+
+        return p;
+      });
     }
   },
 
@@ -46,6 +57,11 @@ export default new Vuex.Store({
     async createPost({ commit }, post) {
       const res = await axios.post('/api/posts', post);
       commit('PREPEND_POST', res.data.data);
+    },
+
+    async likePost({ commit }, id) {
+      let post = await axios.post(`/api/posts/${id}/likes`);
+      commit('UPDATE_POST', post.data.data);
     }
   }
 });
