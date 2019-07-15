@@ -19,6 +19,9 @@ class PostLikeController extends Controller
 
     public function store(Post $post, Request $request)
     {
+        $this->authorize('like', $post);
+        // abort_if($post->user_id === $request->user()->id, 403, "You are not allowed to like your own posts.");
+
         $post->likes()->create([
             'user_id' => $request->user()->id
         ]);
