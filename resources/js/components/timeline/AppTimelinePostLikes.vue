@@ -10,7 +10,7 @@
     </span>
 
     <ul
-      v-if="!ownsPost"
+      v-if="canLike"
       class="list-inline mb-0">
       <li class="list-inline-item">
         <a
@@ -46,6 +46,12 @@ export default {
     },
     ownsPost() {
       return this.post.user.data.owner;
+    },
+    hasLikesRemaining() {
+      return this.post.user.data.likes_remaining > 0;
+    },
+    canLike() {
+      return !this.ownsPost && this.hasLikesRemaining;
     }
   },
   methods: {

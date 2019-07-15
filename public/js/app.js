@@ -2097,6 +2097,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     ownsPost: function ownsPost() {
       return this.post.user.data.owner;
+    },
+    hasLikesRemaining: function hasLikesRemaining() {
+      return this.post.user.data.likes_remaining > 0;
+    },
+    canLike: function canLike() {
+      return !this.ownsPost && this.hasLikesRemaining;
     }
   },
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])({
@@ -39522,7 +39528,7 @@ var render = function() {
         )
       : _vm._e(),
     _vm._v(" "),
-    !_vm.ownsPost
+    _vm.canLike
       ? _c("ul", { staticClass: "list-inline mb-0" }, [
           _c("li", { staticClass: "list-inline-item" }, [
             _c(

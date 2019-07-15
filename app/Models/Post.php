@@ -7,6 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     /**
+     * The maximum number of times a post can be liked by the same user.
+     */
+    const MAX_LIKES = 5;
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -14,6 +19,16 @@ class Post extends Model
     protected $fillable = [
         'body',
     ];
+
+    public function maxLikesReachedFor(User $user)
+    {
+        return $this->likesRemainingFor($user) <= 0;
+    }
+
+    public function likesRemainingFor(User $user)
+    {
+        return self::MAX_LIKES - $this->likes->where('user_id', $user->id)->count();
+    }
 
     /**
      * User relationship.
