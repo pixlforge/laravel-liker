@@ -2063,6 +2063,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2077,6 +2081,12 @@ __webpack_require__.r(__webpack_exports__);
     },
     numberOfUsers: function numberOfUsers() {
       return pluralize__WEBPACK_IMPORTED_MODULE_0___default()('person', this.post.likers.data.length, true);
+    },
+    likedOwnPost: function likedOwnPost() {
+      return this.post.user.data.liked;
+    },
+    ownsPost: function ownsPost() {
+      return this.post.user.data.owner;
     }
   }
 });
@@ -39471,18 +39481,28 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _vm.post.likes
-      ? _c("span", { staticClass: "text-secondary" }, [
-          _vm._v(
-            "\n    " +
-              _vm._s(_vm.likes) +
-              " from " +
-              _vm._s(_vm.numberOfUsers) +
-              "\n    (including you)\n  "
-          )
-        ])
+      ? _c(
+          "span",
+          { staticClass: "text-secondary" },
+          [
+            _vm._v(
+              "\n    " +
+                _vm._s(_vm.likes) +
+                " from " +
+                _vm._s(_vm.numberOfUsers) +
+                "\n    "
+            ),
+            _vm.likedOwnPost
+              ? [_vm._v("\n      (including you)\n    ")]
+              : _vm._e()
+          ],
+          2
+        )
       : _vm._e(),
     _vm._v(" "),
-    _vm._m(0)
+    !_vm.ownsPost
+      ? _c("ul", { staticClass: "list-inline mb-0" }, [_vm._m(0)])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -39490,10 +39510,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "list-inline mb-0" }, [
-      _c("li", { staticClass: "list-inline-item" }, [
-        _c("a", { attrs: { href: "" } }, [_vm._v("\n        Like it\n      ")])
-      ])
+    return _c("li", { staticClass: "list-inline-item" }, [
+      _c("a", { attrs: { href: "" } }, [_vm._v("\n        Like it\n      ")])
     ])
   }
 ]
