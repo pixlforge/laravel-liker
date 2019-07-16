@@ -4,9 +4,8 @@ namespace App\Events;
 
 use App\Models\Post;
 use Illuminate\Broadcasting\Channel;
+use App\Transformers\PostTransformer;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -30,6 +29,15 @@ class PostCreated implements ShouldBroadcast
     public function __construct(Post $post)
     {
         $this->post = $post;
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            'post' => [
+                'id' => $this->post->id
+            ]
+        ];
     }
 
     /**

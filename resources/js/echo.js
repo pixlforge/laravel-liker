@@ -1,4 +1,6 @@
+import store from "./store";
+
 Echo.channel('posts')
     .listen('PostCreated', event => {
-      console.log(event.post);
+      store.dispatch('getPost', event.post.id);
     });

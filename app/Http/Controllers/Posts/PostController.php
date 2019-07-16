@@ -37,6 +37,20 @@ class PostController extends Controller
     /**
      * Undocumented function
      *
+     * @param Post $post
+     * @return void
+     */
+    public function show(Post $post)
+    {
+        return fractal()
+            ->item($post)
+            ->transformWith(new PostTransformer())
+            ->respond(200, [], JSON_UNESCAPED_SLASHES);
+    }
+
+    /**
+     * Undocumented function
+     *
      * @param Request $request
      * @return void
      */
@@ -48,7 +62,7 @@ class PostController extends Controller
 
         $post = $request->user()->posts()->create($request->only('body'));
 
-        PostCreated::dispatch($post); // broadcast to others
+        PostCreated::broadcast($post)->toOthers();
 
         return fractal()
             ->item($post)
